@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manicute — Premium Press-On Nails</title>
+  <meta name="description" content="Salon-quality press-on nails crafted for busy women. Shop Manicute's curated collection — ballerina, oval, square, almond and more. Apply in minutes, wear for weeks." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            rose:   { DEFAULT: '#7C3D5E', light: '#A0637E', deep: '#5A2B45' },
+            blush:  { DEFAULT: '#F7ECE8', deep: '#EDDED7' },
+            gold:   { DEFAULT: '#C9A96E', light: '#E2CBA4', deep: '#A8844E' },
+            cream:  '#FEFCFA',
+            ink:    '#1C1016',
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans:  ['"DM Sans"', 'system-ui', 'sans-serif'],
+          },
+          letterSpacing: {
+            widest2: '0.25em',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* ── Base ───────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { background: #FEFCFA; color: #1C1016; font-family: "DM Sans", system-ui, sans-serif; }
+
+    /* ── Grain overlay ───────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    /* ── Typography helpers ───────────────────────── */
+    .display { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 300; letter-spacing: -0.01em; line-height: 1.05; }
+    .eyebrow { font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 500; }
+
+    /* ── Nav ──────────────────────────────────────── */
+    #nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+    #nav.scrolled {
+      background: rgba(254, 252, 250, 0.92);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 1px 0 rgba(124,61,94,0.08);
+    }
+
+    /* ── Hero ──────────────────────────────────────── */
+    .hero-bg {
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 40%, rgba(169,100,126,0.18) 0%, transparent 65%),
+        radial-gradient(ellipse 60% 80% at 20% 70%, rgba(201,169,110,0.12) 0%, transparent 60%),
+        #FEFCFA;
+    }
+
+    /* ── Cards ─────────────────────────────────────── */
+    .shape-card {
+      cursor: pointer;
+      transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.35s ease;
+    }
+    .shape-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(124,61,94,0.14), 0 4px 16px rgba(124,61,94,0.08);
+    }
+    .shape-card:active { transform: translateY(-2px); }
+
+    .product-card {
+      cursor: pointer;
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease;
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(124,61,94,0.12), 0 2px 8px rgba(124,61,94,0.06);
+    }
+
+    /* ── Buttons ─────────────────────────────────── */
+    .btn-primary {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: #7C3D5E;
+      color: #fff;
+      padding: 0.875rem 2.5rem;
+      font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500;
+      transition: background 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+      box-shadow: 0 4px 24px rgba(124,61,94,0.25), 0 1px 4px rgba(124,61,94,0.15);
+    }
+    .btn-primary:hover { background: #5A2B45; transform: translateY(-1px); box-shadow: 0 8px 32px rgba(124,61,94,0.3); }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-primary:focus-visible { outline: 2px solid #C9A96E; outline-offset: 3px; }
+
+    .btn-outline {
+      display: inline-flex; align-items: center; justify-content: center;
+      border: 1px solid #7C3D5E; color: #7C3D5E;
+      padding: 0.75rem 2rem;
+      font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500;
+      transition: background 0.25s ease, color 0.25s ease, transform 0.2s ease;
+    }
+    .btn-outline:hover { background: #7C3D5E; color: #fff; transform: translateY(-1px); }
+    .btn-outline:active { transform: translateY(0); }
+    .btn-outline:focus-visible { outline: 2px solid #C9A96E; outline-offset: 3px; }
+
+    /* ── Section divider ─────────────────────────── */
+    .divider { width: 48px; height: 1px; background: #C9A96E; }
+
+    /* ── Trust bar ───────────────────────────────── */
+    .trust-bar { background: #7C3D5E; color: rgba(255,255,255,0.9); }
+
+    /* ── Marquee ─────────────────────────────────── */
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .marquee-track { display: flex; gap: 0; animation: marquee 28s linear infinite; }
+    .marquee-track:hover { animation-play-state: paused; }
+
+    /* ── Footer ──────────────────────────────────── */
+    footer { background: #1C1016; color: rgba(255,255,255,0.65); }
+    footer a:hover { color: #C9A96E; }
+
+    /* ── Image wrapper ───────────────────────────── */
+    .nail-img { object-fit: contain; object-position: center; }
+
+    /* ── Steps connector ─────────────────────────── */
+    .step-connector { flex: 1; height: 1px; background: linear-gradient(to right, #C9A96E44, #C9A96E, #C9A96E44); }
+  </style>
+</head>
+
+<body class="relative">
+
+  <!-- ═══════════════════════════════ NAV ═══════════════════════════════ -->
+  <nav id="nav" class="px-6 md:px-10 lg:px-16">
+    <div class="max-w-screen-xl mx-auto flex items-center justify-between h-16 md:h-20">
+
+      <!-- Logo -->
+      <a href="index.html" class="flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold">
+        <span class="display text-2xl md:text-3xl text-ink tracking-tight">Manicute</span>
+        <span class="hidden sm:block w-px h-4 bg-gold/60"></span>
+        <span class="hidden sm:block eyebrow text-rose" style="font-size:0.6rem">Press-On Nails</span>
+      </a>
+
+      <!-- Nav links -->
+      <ul class="hidden md:flex items-center gap-8">
+        <li><a href="#shop" class="eyebrow text-xs text-ink/70 hover:text-rose transition-colors">Shop</a></li>
+        <li><a href="#how-it-works" class="eyebrow text-xs text-ink/70 hover:text-rose transition-colors">How It Works</a></li>
+        <li><a href="#about" class="eyebrow text-xs text-ink/70 hover:text-rose transition-colors">Our Story</a></li>
+      </ul>
+
+      <!-- CTA + Cart -->
+      <div class="flex items-center gap-4">
+        <a href="product.html" class="btn-primary text-xs hidden sm:inline-flex">Shop Now</a>
+        <!-- Cart icon -->
+        <button aria-label="Open cart" class="relative p-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1C1016" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+          <span class="absolute -top-0.5 -right-0.5 bg-rose text-white text-[9px] font-semibold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+        </button>
+        <!-- Mobile menu -->
+        <button class="md:hidden p-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded" aria-label="Menu" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1C1016" stroke-width="1.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile dropdown -->
+    <div id="mobile-menu" class="hidden md:hidden bg-cream/95 backdrop-blur border-t border-blush-deep px-6 py-5 space-y-4">
+      <a href="#shop" class="block eyebrow text-ink/70 hover:text-rose transition-colors" onclick="this.closest('#mobile-menu').classList.add('hidden')">Shop</a>
+      <a href="#how-it-works" class="block eyebrow text-ink/70 hover:text-rose transition-colors" onclick="this.closest('#mobile-menu').classList.add('hidden')">How It Works</a>
+      <a href="#about" class="block eyebrow text-ink/70 hover:text-rose transition-colors" onclick="this.closest('#mobile-menu').classList.add('hidden')">Our Story</a>
+      <a href="product.html" class="btn-primary block text-center text-xs">Shop Now</a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════ TRUST BAR ═══════════════════════════════ -->
+  <div class="trust-bar overflow-hidden py-2.5 mt-16 md:mt-20">
+    <div class="marquee-track whitespace-nowrap">
+      <span class="inline-block px-8 eyebrow" style="font-size:0.65rem">✦ Free shipping over $45</span>
+      <span class="inline-block px-8 eyebrow" style="font-size:0.65rem">✦ Salon-quality finish</span>
+      <span class="inline-block px-8 eyebrow" style="font-size:0.65rem">✦ Lasts 2–4 weeks</span>
+      <span class="inline-block px-8 eyebrow" style="font-size:0.65rem">✦ 24-hour returns</span>
+      <span class="inline-block px-8 eyebrow" style="font-size:0.65rem">✦ No UV lamp needed</span>
+      <span class="inline-block px-8 eyebrow" style="font-size:0.65rem">✦ Free shipping over $45</span>
+      <span class="inline-block px-8 eyebrow" style="font-size:0.65rem">✦ Salon-quality finish</span>
+      <span class="inline-block px-8 eyebrow" style="font-size:0.65rem">✦ Lasts 2–4 weeks</span>
+      <span class="inline-block px-8 eyebrow" style="font-size:0.65rem">✦ 24-hour returns</span>
+      <span class="inline-block px-8 eyebrow" style="font-size:0.65rem">✦ No UV lamp needed</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ HERO ═══════════════════════════════ -->
+  <section class="hero-bg pt-12 pb-16 md:pt-16 md:pb-24 px-6 md:px-10 lg:px-16 min-h-[90vh] flex items-center">
+    <div class="max-w-screen-xl mx-auto w-full grid lg:grid-cols-2 gap-12 lg:gap-0 items-center">
+
+      <!-- Left: copy -->
+      <div class="max-w-lg">
+        <p class="eyebrow text-rose mb-6">Luxury Press-On Nails</p>
+        <h1 class="display text-5xl sm:text-6xl md:text-7xl text-ink mb-6 leading-[1]">
+          Salon nails,<br/>
+          <em class="text-rose">on your terms.</em>
+        </h1>
+        <p class="text-ink/60 leading-[1.75] text-base md:text-lg mb-10 font-light max-w-sm">
+          Press-on nails so refined they're mistaken for salon work — ready in minutes, built for life's real moments.
+        </p>
+
+        <!-- Benefits chips -->
+        <ul class="flex flex-wrap gap-2.5 mb-10">
+          <li class="inline-flex items-center gap-2 bg-blush rounded-full px-4 py-1.5 text-xs font-medium text-rose/80">
+            <span class="w-1.5 h-1.5 rounded-full bg-gold inline-block"></span>Lasts 2–4 weeks
+          </li>
+          <li class="inline-flex items-center gap-2 bg-blush rounded-full px-4 py-1.5 text-xs font-medium text-rose/80">
+            <span class="w-1.5 h-1.5 rounded-full bg-gold inline-block"></span>No lamp or gel
+          </li>
+          <li class="inline-flex items-center gap-2 bg-blush rounded-full px-4 py-1.5 text-xs font-medium text-rose/80">
+            <span class="w-1.5 h-1.5 rounded-full bg-gold inline-block"></span>Reusable
+          </li>
+          <li class="inline-flex items-center gap-2 bg-blush rounded-full px-4 py-1.5 text-xs font-medium text-rose/80">
+            <span class="w-1.5 h-1.5 rounded-full bg-gold inline-block"></span>Sizes for every hand
+          </li>
+        </ul>
+
+        <div class="flex flex-wrap gap-4">
+          <a href="#shop" class="btn-primary">Shop the Collection</a>
+          <a href="#how-it-works" class="btn-outline">How It Works</a>
+        </div>
+
+        <!-- Social proof -->
+        <div class="mt-10 flex items-center gap-4 text-sm text-ink/50">
+          <div class="flex -space-x-1.5">
+            <span class="w-7 h-7 rounded-full bg-blush-deep border-2 border-cream flex items-center justify-center text-[10px] text-rose font-medium">K</span>
+            <span class="w-7 h-7 rounded-full bg-gold/30 border-2 border-cream flex items-center justify-center text-[10px] text-rose font-medium">S</span>
+            <span class="w-7 h-7 rounded-full bg-rose/20 border-2 border-cream flex items-center justify-center text-[10px] text-rose font-medium">A</span>
+          </div>
+          <span class="text-xs leading-tight">
+            <strong class="text-ink/70 font-medium">2,400+</strong> happy customers<br/>
+            <span class="text-gold">★★★★★</span> 4.9 avg. rating
+          </span>
+        </div>
+      </div>
+
+      <!-- Right: featured nail image grid -->
+      <div class="relative flex items-center justify-center lg:justify-end">
+        <div class="relative grid grid-cols-2 gap-4 max-w-sm lg:max-w-md w-full">
+          <!-- Top left -->
+          <div class="bg-blush rounded-3xl overflow-hidden aspect-square flex items-center justify-center p-4 shadow-[0_8px_40px_rgba(124,61,94,0.12)]">
+            <img src="Brand Assests/Ballerina.png" alt="Ballerina press-on nail set by Manicute" class="nail-img w-full h-full" />
+          </div>
+          <!-- Top right (taller) -->
+          <div class="bg-blush-deep rounded-3xl overflow-hidden aspect-[4/5] flex items-center justify-center p-4 shadow-[0_8px_40px_rgba(124,61,94,0.1)] -mt-6">
+            <img src="Brand Assests/short oval.png" alt="Short oval press-on nail set by Manicute" class="nail-img w-full h-full" />
+          </div>
+          <!-- Bottom left (taller) -->
+          <div class="bg-[#EDE0DB] rounded-3xl overflow-hidden aspect-[4/5] flex items-center justify-center p-4 shadow-[0_8px_40px_rgba(201,169,110,0.15)] -mb-6">
+            <img src="Brand Assests/medium almond.png" alt="Medium almond press-on nail set by Manicute" class="nail-img w-full h-full" />
+          </div>
+          <!-- Bottom right -->
+          <div class="bg-blush rounded-3xl overflow-hidden aspect-square flex items-center justify-center p-4 shadow-[0_8px_40px_rgba(124,61,94,0.08)]">
+            <img src="Brand Assests/short square.png" alt="Short square press-on nail set by Manicute" class="nail-img w-full h-full" />
+          </div>
+          <!-- Floating badge -->
+          <div class="absolute -right-4 top-1/3 bg-white rounded-2xl shadow-[0_8px_32px_rgba(124,61,94,0.18)] px-4 py-3 text-center hidden md:block">
+            <p class="display text-2xl text-rose">24</p>
+            <p class="eyebrow text-ink/50 text-[0.6rem]">shapes &amp; styles</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════ VALUE PROPS ═══════════════════════════════ -->
+  <section class="bg-blush py-12 px-6 md:px-10 lg:px-16 border-y border-blush-deep">
+    <div class="max-w-screen-xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+      <div>
+        <div class="text-4xl mb-2">⏱</div>
+        <p class="display text-xl text-ink mb-1">Ready in 15 min</p>
+        <p class="text-xs text-ink/50 leading-relaxed">Prep, press, go — no appointments, no waiting, no dry time.</p>
+      </div>
+      <div class="sm:border-x border-blush-deep sm:px-8">
+        <div class="text-4xl mb-2">💎</div>
+        <p class="display text-xl text-ink mb-1">Salon-level finish</p>
+        <p class="text-xs text-ink/50 leading-relaxed">Hand-finished tips in salon gel quality — people won't know the difference.</p>
+      </div>
+      <div>
+        <div class="text-4xl mb-2">♻️</div>
+        <p class="display text-xl text-ink mb-1">Reusable up to 5×</p>
+        <p class="text-xs text-ink/50 leading-relaxed">Remove gently, store safely, rewear with our Nail Bond adhesive.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════ SHOP BY SHAPE ═══════════════════════════════ -->
+  <section id="shop" class="py-20 md:py-28 px-6 md:px-10 lg:px-16">
+    <div class="max-w-screen-xl mx-auto">
+
+      <div class="text-center mb-14">
+        <p class="eyebrow text-rose mb-4">Find Your Shape</p>
+        <h2 class="display text-4xl md:text-5xl text-ink">Shop by Style</h2>
+        <div class="divider mx-auto mt-5"></div>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+
+        <!-- Ballerina -->
+        <a href="product.html?shape=ballerina" class="shape-card group bg-blush rounded-2xl overflow-hidden text-center p-6 block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose">
+          <div class="aspect-[3/4] flex items-center justify-center mb-4 relative overflow-hidden rounded-xl">
+            <img src="Brand Assests/Ballerina.png" alt="Ballerina press-on nails" class="nail-img w-full h-full transition-transform duration-500 group-hover:scale-105" />
+          </div>
+          <p class="display text-lg text-ink mb-0.5">Ballerina</p>
+          <p class="text-xs text-ink/50">Tapered coffin tip</p>
+          <p class="eyebrow text-rose mt-3" style="font-size:0.65rem">Shop →</p>
+        </a>
+
+        <!-- Short Oval -->
+        <a href="product.html?shape=short-oval" class="shape-card group bg-[#F0E8E5] rounded-2xl overflow-hidden text-center p-6 block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose">
+          <div class="aspect-[3/4] flex items-center justify-center mb-4 relative overflow-hidden rounded-xl">
+            <img src="Brand Assests/short oval.png" alt="Short oval press-on nails" class="nail-img w-full h-full transition-transform duration-500 group-hover:scale-105" />
+          </div>
+          <p class="display text-lg text-ink mb-0.5">Short Oval</p>
+          <p class="text-xs text-ink/50">Classic softened edge</p>
+          <p class="eyebrow text-rose mt-3" style="font-size:0.65rem">Shop →</p>
+        </a>
+
+        <!-- Short Square -->
+        <a href="product.html?shape=short-square" class="shape-card group bg-blush rounded-2xl overflow-hidden text-center p-6 block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose">
+          <div class="aspect-[3/4] flex items-center justify-center mb-4 relative overflow-hidden rounded-xl">
+            <img src="Brand Assests/short square.png" alt="Short square press-on nails" class="nail-img w-full h-full transition-transform duration-500 group-hover:scale-105" />
+          </div>
+          <p class="display text-lg text-ink mb-0.5">Short Square</p>
+          <p class="text-xs text-ink/50">Clean, modern edge</p>
+          <p class="eyebrow text-rose mt-3" style="font-size:0.65rem">Shop →</p>
+        </a>
+
+        <!-- Medium Almond -->
+        <a href="product.html?shape=medium-almond" class="shape-card group bg-[#F0E8E5] rounded-2xl overflow-hidden text-center p-6 block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose">
+          <div class="aspect-[3/4] flex items-center justify-center mb-4 relative overflow-hidden rounded-xl">
+            <img src="Brand Assests/medium almond.png" alt="Medium almond press-on nails" class="nail-img w-full h-full transition-transform duration-500 group-hover:scale-105" />
+          </div>
+          <p class="display text-lg text-ink mb-0.5">Medium Almond</p>
+          <p class="text-xs text-ink/50">Elongating elegance</p>
+          <p class="eyebrow text-rose mt-3" style="font-size:0.65rem">Shop →</p>
+        </a>
+
+        <!-- Medium Oval -->
+        <a href="product.html?shape=medium-oval" class="shape-card group bg-blush rounded-2xl overflow-hidden text-center p-6 block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose">
+          <div class="aspect-[3/4] flex items-center justify-center mb-4 relative overflow-hidden rounded-xl">
+            <img src="Brand Assests/medium oval.png" alt="Medium oval press-on nails" class="nail-img w-full h-full transition-transform duration-500 group-hover:scale-105" />
+          </div>
+          <p class="display text-lg text-ink mb-0.5">Medium Oval</p>
+          <p class="text-xs text-ink/50">Polished all-day look</p>
+          <p class="eyebrow text-rose mt-3" style="font-size:0.65rem">Shop →</p>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════ FEATURED PRODUCTS ═══════════════════════════════ -->
+  <section class="bg-blush py-20 md:py-28 px-6 md:px-10 lg:px-16">
+    <div class="max-w-screen-xl mx-auto">
+
+      <div class="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-12 gap-4">
+        <div>
+          <p class="eyebrow text-rose mb-3">Bestsellers</p>
+          <h2 class="display text-4xl md:text-5xl text-ink">Featured Collection</h2>
+        </div>
+        <a href="#shop" class="btn-outline text-xs flex-shrink-0">View All</a>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+
+        <!-- Product 1 -->
+        <a href="product.html" class="product-card group bg-cream rounded-2xl overflow-hidden block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose">
+          <div class="bg-[#EDE0DB] aspect-square flex items-center justify-center p-6 relative overflow-hidden">
+            <img src="Brand Assests/Ballerina Black.png" alt="Ballerina Black — Manicute press-on nails" class="nail-img w-4/5 h-4/5 transition-transform duration-500 group-hover:scale-105" />
+            <span class="absolute top-3 left-3 bg-rose text-white eyebrow px-2.5 py-1 rounded-full" style="font-size:0.6rem">Bestseller</span>
+          </div>
+          <div class="p-5">
+            <p class="eyebrow text-rose/60 mb-1" style="font-size:0.6rem">Ballerina · Black</p>
+            <p class="display text-xl text-ink mb-1 leading-tight">Noir Velvet</p>
+            <p class="text-xs text-ink/50 mb-4 leading-relaxed">Matte-finish ballerina with deep obsidian tone. Timeless and directional.</p>
+            <div class="flex items-center justify-between">
+              <span class="display text-2xl text-rose">$28</span>
+              <span class="btn-primary py-2 px-4 text-[0.65rem]">Add to Cart</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Product 2 -->
+        <a href="product.html" class="product-card group bg-cream rounded-2xl overflow-hidden block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose">
+          <div class="bg-blush aspect-square flex items-center justify-center p-6 relative overflow-hidden">
+            <img src="Brand Assests/ short oval pink.png" alt="Short oval pink — Manicute press-on nails" class="nail-img w-4/5 h-4/5 transition-transform duration-500 group-hover:scale-105" />
+            <span class="absolute top-3 left-3 bg-gold text-white eyebrow px-2.5 py-1 rounded-full" style="font-size:0.6rem">New</span>
+          </div>
+          <div class="p-5">
+            <p class="eyebrow text-rose/60 mb-1" style="font-size:0.6rem">Short Oval · Blush</p>
+            <p class="display text-xl text-ink mb-1 leading-tight">Petal Blush</p>
+            <p class="text-xs text-ink/50 mb-4 leading-relaxed">Soft blush pink oval — the everyday nail that goes with everything.</p>
+            <div class="flex items-center justify-between">
+              <span class="display text-2xl text-rose">$24</span>
+              <span class="btn-primary py-2 px-4 text-[0.65rem]">Add to Cart</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Product 3 -->
+        <a href="product.html" class="product-card group bg-cream rounded-2xl overflow-hidden block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose">
+          <div class="bg-[#E8DDD9] aspect-square flex items-center justify-center p-6 relative overflow-hidden">
+            <img src="Brand Assests/medium almond_1.png" alt="Medium almond — Manicute press-on nails" class="nail-img w-4/5 h-4/5 transition-transform duration-500 group-hover:scale-105" />
+          </div>
+          <div class="p-5">
+            <p class="eyebrow text-rose/60 mb-1" style="font-size:0.6rem">Medium Almond · Nude</p>
+            <p class="display text-xl text-ink mb-1 leading-tight">Bare Silk</p>
+            <p class="text-xs text-ink/50 mb-4 leading-relaxed">A polished nude that elongates the finger. Office-to-evening ready.</p>
+            <div class="flex items-center justify-between">
+              <span class="display text-2xl text-rose">$26</span>
+              <span class="btn-primary py-2 px-4 text-[0.65rem]">Add to Cart</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Product 4 -->
+        <a href="product.html" class="product-card group bg-cream rounded-2xl overflow-hidden block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose">
+          <div class="bg-blush aspect-square flex items-center justify-center p-6 relative overflow-hidden">
+            <img src="Brand Assests/ballerina_1.png" alt="Ballerina set — Manicute press-on nails" class="nail-img w-4/5 h-4/5 transition-transform duration-500 group-hover:scale-105" />
+          </div>
+          <div class="p-5">
+            <p class="eyebrow text-rose/60 mb-1" style="font-size:0.6rem">Ballerina · Pearl</p>
+            <p class="display text-xl text-ink mb-1 leading-tight">Porcelain Ballet</p>
+            <p class="text-xs text-ink/50 mb-4 leading-relaxed">White pearl ballerina nails for bridal, events, or statement days.</p>
+            <div class="flex items-center justify-between">
+              <span class="display text-2xl text-rose">$28</span>
+              <span class="btn-primary py-2 px-4 text-[0.65rem]">Add to Cart</span>
+            </div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════ HOW IT WORKS ═══════════════════════════════ -->
+  <section id="how-it-works" class="py-20 md:py-28 px-6 md:px-10 lg:px-16">
+    <div class="max-w-screen-xl mx-auto">
+
+      <div class="text-center mb-16">
+        <p class="eyebrow text-rose mb-4">Simple as that</p>
+        <h2 class="display text-4xl md:text-5xl text-ink">Apply in 4 Steps</h2>
+        <div class="divider mx-auto mt-5"></div>
+      </div>
+
+      <div class="flex flex-col md:flex-row items-start md:items-center gap-8 md:gap-0">
+
+        <div class="flex-1 text-center px-6">
+          <div class="w-14 h-14 rounded-full border border-gold/40 flex items-center justify-center mx-auto mb-5 bg-cream shadow-[0_4px_24px_rgba(201,169,110,0.15)]">
+            <span class="display text-2xl text-rose">1</span>
+          </div>
+          <p class="display text-xl text-ink mb-2">Prep</p>
+          <p class="text-xs text-ink/55 leading-relaxed max-w-[160px] mx-auto">Clean, push back cuticles, lightly buff. Takes 2 minutes.</p>
+        </div>
+
+        <div class="step-connector hidden md:block"></div>
+
+        <div class="flex-1 text-center px-6">
+          <div class="w-14 h-14 rounded-full border border-gold/40 flex items-center justify-center mx-auto mb-5 bg-cream shadow-[0_4px_24px_rgba(201,169,110,0.15)]">
+            <span class="display text-2xl text-rose">2</span>
+          </div>
+          <p class="display text-xl text-ink mb-2">Size</p>
+          <p class="text-xs text-ink/55 leading-relaxed max-w-[160px] mx-auto">Match each nail to the correct size — every set includes 12 sizes.</p>
+        </div>
+
+        <div class="step-connector hidden md:block"></div>
+
+        <div class="flex-1 text-center px-6">
+          <div class="w-14 h-14 rounded-full border border-gold/40 flex items-center justify-center mx-auto mb-5 bg-cream shadow-[0_4px_24px_rgba(201,169,110,0.15)]">
+            <span class="display text-2xl text-rose">3</span>
+          </div>
+          <p class="display text-xl text-ink mb-2">Apply</p>
+          <p class="text-xs text-ink/55 leading-relaxed max-w-[160px] mx-auto">Press down firmly from cuticle to tip for 30 seconds.</p>
+        </div>
+
+        <div class="step-connector hidden md:block"></div>
+
+        <div class="flex-1 text-center px-6">
+          <div class="w-14 h-14 rounded-full border border-gold/40 flex items-center justify-center mx-auto mb-5 bg-cream shadow-[0_4px_24px_rgba(201,169,110,0.15)]">
+            <span class="display text-2xl text-rose">4</span>
+          </div>
+          <p class="display text-xl text-ink mb-2">Enjoy</p>
+          <p class="text-xs text-ink/55 leading-relaxed max-w-[160px] mx-auto">Wear for 2–4 weeks. Remove with warm water — nails stay healthy.</p>
+        </div>
+
+      </div>
+
+      <div class="text-center mt-16">
+        <a href="product.html" class="btn-primary">Get Your Set</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════ ABOUT / BRAND ═══════════════════════════════ -->
+  <section id="about" class="bg-ink py-20 md:py-28 px-6 md:px-10 lg:px-16">
+    <div class="max-w-screen-xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+
+      <!-- Left: text -->
+      <div>
+        <p class="eyebrow text-gold mb-5">Our Story</p>
+        <h2 class="display text-4xl md:text-5xl text-cream mb-6">
+          Made for women who refuse to choose between<em class="text-rose-light italic"> beauty and time.</em>
+        </h2>
+        <p class="text-cream/60 leading-[1.8] text-sm mb-5">
+          Manicute was born out of frustration — the frustration of cancelling salon appointments, sitting for two hours, and chipping a nail three days later. We believed there was a better way.
+        </p>
+        <p class="text-cream/60 leading-[1.8] text-sm mb-10">
+          Every set is designed by hand, finished in salon-grade gel material, and tested across hundreds of nail sizes to ensure a natural fit. No shortcuts. No compromise.
+        </p>
+        <div class="flex items-center gap-3">
+          <div class="divider bg-gold"></div>
+          <p class="eyebrow text-gold/70 text-xs">Premium. Intentional. Yours.</p>
+        </div>
+      </div>
+
+      <!-- Right: stats -->
+      <div class="grid grid-cols-2 gap-5">
+        <div class="bg-white/5 rounded-2xl p-7 border border-white/8">
+          <p class="display text-5xl text-gold mb-1">24</p>
+          <p class="text-xs text-cream/50 leading-relaxed">Shapes, sizes &amp; finishes — for every hand and occasion</p>
+        </div>
+        <div class="bg-white/5 rounded-2xl p-7 border border-white/8 mt-6">
+          <p class="display text-5xl text-gold mb-1">2,400+</p>
+          <p class="text-xs text-cream/50 leading-relaxed">Sets sold to women who love their nails without the salon</p>
+        </div>
+        <div class="bg-white/5 rounded-2xl p-7 border border-white/8 -mt-3">
+          <p class="display text-5xl text-gold mb-1">4.9★</p>
+          <p class="text-xs text-cream/50 leading-relaxed">Average rating from verified customers</p>
+        </div>
+        <div class="bg-rose/20 rounded-2xl p-7 border border-rose/20 mt-3">
+          <p class="display text-5xl text-gold mb-1">5×</p>
+          <p class="text-xs text-cream/50 leading-relaxed">Reusable — store, rewear, love again</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════ TESTIMONIALS ═══════════════════════════════ -->
+  <section class="py-20 md:py-28 px-6 md:px-10 lg:px-16">
+    <div class="max-w-screen-xl mx-auto">
+
+      <div class="text-center mb-14">
+        <p class="eyebrow text-rose mb-4">Real Reviews</p>
+        <h2 class="display text-4xl md:text-5xl text-ink">What Customers Say</h2>
+        <div class="divider mx-auto mt-5"></div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <div class="bg-blush rounded-2xl p-7">
+          <div class="flex gap-0.5 mb-4 text-gold">★★★★★</div>
+          <p class="text-ink/70 text-sm leading-relaxed mb-6 font-light italic">"I've tried so many press-ons and nothing compares. These stay on for three weeks and my nail tech thought I'd had a gel set done."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-rose/20 flex items-center justify-center text-xs font-semibold text-rose">K</div>
+            <div>
+              <p class="text-xs font-medium text-ink">Katie M.</p>
+              <p class="text-[10px] text-ink/40">Verified Customer · Ballerina Set</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-cream rounded-2xl p-7 border border-blush-deep shadow-[0_4px_24px_rgba(124,61,94,0.06)]">
+          <div class="flex gap-0.5 mb-4 text-gold">★★★★★</div>
+          <p class="text-ink/70 text-sm leading-relaxed mb-6 font-light italic">"The sizing kit is genuinely incredible — I'm between sizes and the guide made it so easy. Wore mine through a week of gym sessions."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-gold/20 flex items-center justify-center text-xs font-semibold text-rose">S</div>
+            <div>
+              <p class="text-xs font-medium text-ink">Sophie T.</p>
+              <p class="text-[10px] text-ink/40">Verified Customer · Short Oval</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-blush rounded-2xl p-7">
+          <div class="flex gap-0.5 mb-4 text-gold">★★★★★</div>
+          <p class="text-ink/70 text-sm leading-relaxed mb-6 font-light italic">"Ordered for my wedding and cried happy tears. Everyone asked who did my nails. 10/10 would buy again — already have for my honeymoon!"</p>
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-blush-deep flex items-center justify-center text-xs font-semibold text-rose">A</div>
+            <div>
+              <p class="text-xs font-medium text-ink">Aisha N.</p>
+              <p class="text-[10px] text-ink/40">Verified Customer · Porcelain Ballet</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════ FINAL CTA ═══════════════════════════════ -->
+  <section class="bg-rose py-20 px-6 md:px-10 text-center"
+    style="background: radial-gradient(ellipse 80% 60% at 50% 50%, #9B4E6E, #5A2B45);">
+    <p class="eyebrow text-gold/80 mb-5">Ready for your best nails?</p>
+    <h2 class="display text-4xl md:text-6xl text-cream mb-6 max-w-2xl mx-auto">
+      Your salon moment, on your schedule.
+    </h2>
+    <p class="text-cream/60 text-sm mb-10 max-w-sm mx-auto leading-relaxed">Join thousands of women who skipped the salon — without skipping the quality.</p>
+    <a href="#shop" class="inline-flex items-center gap-3 bg-cream text-rose hover:bg-blush transition-colors py-4 px-8 text-sm font-medium tracking-widest uppercase">
+      Shop the Collection
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 14 0M13 6l6 6-6 6"/></svg>
+    </a>
+    <p class="text-cream/40 text-xs mt-6">Free shipping on orders over $45 · Easy returns within 30 days</p>
+  </section>
+
+  <!-- ═══════════════════════════════ FOOTER ═══════════════════════════════ -->
+  <footer class="py-16 px-6 md:px-10 lg:px-16">
+    <div class="max-w-screen-xl mx-auto">
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+
+        <!-- Brand -->
+        <div class="md:col-span-2">
+          <p class="display text-3xl text-cream mb-3">Manicute</p>
+          <p class="text-cream/40 text-xs leading-relaxed max-w-xs mb-6">Premium press-on nails for women who want salon quality without the salon. Crafted with care, worn with confidence.</p>
+          <div class="flex gap-3">
+            <a href="#" aria-label="Instagram" class="w-8 h-8 rounded-full bg-white/8 flex items-center justify-center hover:bg-white/15 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" class="text-cream/60"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="#" aria-label="TikTok" class="w-8 h-8 rounded-full bg-white/8 flex items-center justify-center hover:bg-white/15 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" class="text-cream/60"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.17 8.17 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg>
+            </a>
+            <a href="#" aria-label="Pinterest" class="w-8 h-8 rounded-full bg-white/8 flex items-center justify-center hover:bg-white/15 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" class="text-cream/60"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Shop -->
+        <div>
+          <p class="eyebrow text-cream/40 mb-5" style="font-size:0.65rem">Shop</p>
+          <ul class="space-y-3 text-xs text-cream/50">
+            <li><a href="#" class="hover:text-gold transition-colors focus-visible:outline-none focus-visible:underline">All Products</a></li>
+            <li><a href="#" class="hover:text-gold transition-colors focus-visible:outline-none focus-visible:underline">Ballerina</a></li>
+            <li><a href="#" class="hover:text-gold transition-colors focus-visible:outline-none focus-visible:underline">Short Oval</a></li>
+            <li><a href="#" class="hover:text-gold transition-colors focus-visible:outline-none focus-visible:underline">Short Square</a></li>
+            <li><a href="#" class="hover:text-gold transition-colors focus-visible:outline-none focus-visible:underline">Medium Almond</a></li>
+            <li><a href="#" class="hover:text-gold transition-colors focus-visible:outline-none focus-visible:underline">Accessories</a></li>
+          </ul>
+        </div>
+
+        <!-- Help -->
+        <div>
+          <p class="eyebrow text-cream/40 mb-5" style="font-size:0.65rem">Help</p>
+          <ul class="space-y-3 text-xs text-cream/50">
+            <li><a href="#" class="hover:text-gold transition-colors focus-visible:outline-none focus-visible:underline">Sizing Guide</a></li>
+            <li><a href="#" class="hover:text-gold transition-colors focus-visible:outline-none focus-visible:underline">How to Apply</a></li>
+            <li><a href="#" class="hover:text-gold transition-colors focus-visible:outline-none focus-visible:underline">Shipping &amp; Returns</a></li>
+            <li><a href="#" class="hover:text-gold transition-colors focus-visible:outline-none focus-visible:underline">FAQ</a></li>
+            <li><a href="#" class="hover:text-gold transition-colors focus-visible:outline-none focus-visible:underline">Contact Us</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="border-t border-white/8 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] text-cream/30">
+        <p>© 2025 Manicute. All rights reserved.</p>
+        <div class="flex gap-6">
+          <a href="#" class="hover:text-gold transition-colors">Privacy Policy</a>
+          <a href="#" class="hover:text-gold transition-colors">Terms of Service</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════ SCRIPTS ═══════════════════════════════ -->
+  <script>
+    // Nav scroll behavior
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+  </script>
+
+</body>
+</html>
